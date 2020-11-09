@@ -16,3 +16,8 @@ With post resolution
 
 `curl -s -H accept: application/dns-message https://cloudflare-dns.com/dns-query?dns=q80BAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB | ./bin/wireformat -f -`
 
+Wireformat encode and decode
+
+`./bin/wireformat -s 'www.example.com' | ./bin/wireformat -f -`
+
+`echo 'www.example.com' | ./bin/wireformat | ./bin/wireformat -f -`
