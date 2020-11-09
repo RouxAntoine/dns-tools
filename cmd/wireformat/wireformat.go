@@ -9,6 +9,8 @@ import (
 	"os"
 	"strings"
 
+	check "antoine-roux.ml/projects/go/dns-tools/internal"
+
 	"github.com/miekg/dns"
 )
 
@@ -24,26 +26,20 @@ func main() {
 	var err error
 	if *file != "" {
 		if *file == "-" {
-			*file = "/dev/stdin"
+			*file = os.Stdin.Name()
 		}
 		body, err = ioutil.ReadFile(*file)
-		if err != nil {
-			log.Fatalln(err)
-		}
+		check.Check(err)
 
 		msg := &dns.Msg{}
 		err = msg.Unpack(body)
-		if err != nil {
-			log.Fatalln(err)
-		}
+		check.Check(err)
 
 		log.Println(msg)
 	} else if *domainToResolve != "" {
 		if *domainToResolve == "-" {
-			readDomainToResolve, err := ioutil.ReadFile("/dev/stdin")
-			if err != nil {
-				log.Fatalln(err)
-			}
+			readDomainToResolve, err := ioutil.ReadFile(os.Stdin.Name())
+			check.Check(err)
 			*domainToResolve = strings.TrimSuffix(string(readDomainToResolve), "\n")
 		}
 		msg := &dns.Msg{
@@ -56,9 +52,7 @@ func main() {
 			},
 		}
 		b, err := msg.Pack()
-		if err != nil {
-			log.Fatalln(err)
-		}
+		check.Check(err)
 		binary.Write(os.Stdout, binary.LittleEndian, b)
 	} else {
 		log.Println(errors.New("Too few argument pass"))
