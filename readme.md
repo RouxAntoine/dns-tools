@@ -4,7 +4,10 @@ dns relative tools like lookup or wireformat converter
 
 ## build
 
-`make wireformat`
+```
+make wireformat
+make http-resolver 
+```
 
 ## run
 
@@ -21,3 +24,9 @@ Wireformat encode and decode
 `./bin/wireformat -s 'www.example.com' | ./bin/wireformat -f -`
 
 `echo 'www.example.com' | ./bin/wireformat | ./bin/wireformat -f -`
+
+
+Dns query and wireformat encode/decode
+
+`echo 'www.google.com' | ./bin/wireformat -s - | ./bin/http-resolver | ./bin/wireformat -f -`
+
