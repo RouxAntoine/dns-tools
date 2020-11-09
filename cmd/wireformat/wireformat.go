@@ -46,7 +46,7 @@ func main() {
 			Question: []dns.Question{
 				dns.Question{
 					dns.Fqdn(*domainToResolve),
-					dns.TypeANY,
+					dns.TypeA,
 					dns.ClassINET,
 				},
 			},
